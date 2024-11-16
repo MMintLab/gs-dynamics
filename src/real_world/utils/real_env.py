@@ -653,3 +653,28 @@ class RealEnv:
         stick_point_in_world = stick_point_in_world.T
         return stick_point_in_world
 
+if __name__ == '__main__':
+    import cv2
+    # JJ NOTE: remember to delete this block
+    use_robot = False
+    exposure_time = 10  
+    env = RealEnv(
+        WH=[640, 480],
+        obs_fps=30,
+        n_obs_steps=2,
+        use_robot=use_robot,
+        speed=100,
+    )
+    env.start(exposure_time=exposure_time)
+    obs = env.get_obs(get_color=True, get_depth=True)
+    print(obs.keys())
+    
+    # open 6 windows to show the camera images
+    for i in range(len(SingleRealsense.get_connected_devices_serial())):
+        cv2.imshow(f'color_{i}', obs[f'color_{i}'][-1])
+        cv2.imshow(f'depth_{i}', obs[f'depth_{i}'][-1])
+    cv2.waitKey(0)
+    
+    
+    env.stop()
+    print("env stopped")
