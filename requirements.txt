@@ -7,4 +7,5 @@ pyrealsense2
 ipdb
 atomics
 gradio
+numpy==1.24.4
 git+https://github.com/xArm-Developer/xArm-Python-SDK.git
